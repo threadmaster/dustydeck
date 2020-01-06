@@ -1,6 +1,9 @@
       program dusty 
 
-      parameter (MAXDIM = 100)
+*  The ancient dusty deck code
+*  Modified to use timing libs in 2016
+
+      parameter (MAXDIM = 50)
 
       integer IA(MAXDIM), N
       double precision AV(MAXDIM), BV(MAXDIM), CV(MAXDIM)
@@ -9,27 +12,46 @@
       double precision CM(MAXDIM,MAXDIM), DM(MAXDIM,MAXDIM)
       double precision check, BOT, TOP, HOLDA, HOLDB, TRACE3
       real start, finish
-    
+
+* The following was added for call to timing library
+      double precision wall, cpu
+      double precision walltime, cputime
+
+* after definint walltime and cputime, start and finish should no longer
+* be used.
+ 
+* The collowing was added only for call to conrand 
+      double precision seed, conrand
+ 
       double precision trig
       external trig
-
+* The collowing was added only for call to conrand 
+      external conrand 
+      
+* The collowing was added only for call to walltime and cputime
+      external walltime, cputime
+ 
       N = MAXDIM
      
-      call cpu_time(start) 
-      call srand(1)
+!      call cpu_time(start) 
+
+      wall = walltime()
+      cpu  = cputime()
+      
+      seed = 1.0D0 
 
 *     Fill arrays
 
 * Loop 10 Series -- Filling Arrays
 
       do 10 i = 1, N
-        AV(i) = bessel_jn(0,dble((rand() *
-     +               (-1)**(mod(int(10*rand()),N)))))
+        AV(i) = bessel_jn(0,dble((conrand(seed) *
+     +               (-1)**(mod(int(10*conrand(seed)),N)))))
 10    continue
 
       do 11 i = 1, N
-        BV(i) = bessel_jn(1,dble((rand() * 
-     +               (-1)**(mod(int(10*rand()),N)))))
+        BV(i) = bessel_jn(1,dble((conrand(seed) * 
+     +               (-1)**(mod(int(10*conrand(seed)),N)))))
 11    continue
 
       check = 0.0
@@ -166,10 +188,12 @@
      +                  - DM(IA(i),IA(i))) / (HOLDA * HOLDB)
 80    continue
 
-      call cpu_time(finish) 
-
+!       call cpu_time(finish) 
+      cpu = cputime() - cpu
+      wall = walltime() - wall
+      
       print *, 'Final trace = ', trace3, ' and IDCHECK ', check
-      print *, '-- RUNTIME -> ', finish-start, ' seconds'
+      print *, '-- RUNTIME -> ', cpu, ' seconds'
       end
         
          
@@ -256,4 +280,30 @@
 
       return
       end
+
+      double precision function conrand(seed)
+*
+* Function to generate a sequence of random numbers.
+* Adapted from the  "Minimal Standard Method, real version 1 in Pascal"
+* Park, S, Miller, K. "Random Number Generators: Good Ones are
+* Hard to Find".  Communications of the ACM. vol 31, number 10,
+* October 1988. pp. 1192-1201.
+*
+* Fortran 2003 Version tested on 64 Bit Linux, gfortran compiler
+* Andrew J. Pounds, Ph.D.
+* Departments of Chemistry and Computer Science
+* Mercer University
+* Fall 2011
+*
+      double precision  seed
+      double precision a, m
+      double precision temp
+      a = 16807.0D0
+      m = 2147483647.0D0
+      temp = a*seed
+      seed = temp - m * int(temp/m)
+      conrand = seed / m
+      return
+      end 
+   
 
