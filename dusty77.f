@@ -2,6 +2,7 @@
 
 *  The ancient dusty deck code
 *  Modified to use timing libs in 2016
+*  Modified to use standardized RNG in 2018 
 
       parameter (MAXDIM = 50)
 
