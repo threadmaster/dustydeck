@@ -12,15 +12,11 @@
       double precision AM(MAXDIM,MAXDIM), BM(MAXDIM,MAXDIM)
       double precision CM(MAXDIM,MAXDIM), DM(MAXDIM,MAXDIM)
       double precision check, BOT, TOP, HOLDA, HOLDB, TRACE3
-      real start, finish
 
 * The following was added for call to timing library
       double precision wall, cpu
       double precision walltime, cputime
 
-* after definint walltime and cputime, start and finish should no longer
-* be used.
- 
 * The collowing was added only for call to conrand 
       double precision seed, conrand
  
@@ -34,8 +30,6 @@
  
       N = MAXDIM
      
-!      call cpu_time(start) 
-
       wall = walltime()
       cpu  = cputime()
       
@@ -189,7 +183,6 @@
      +                  - DM(IA(i),IA(i))) / (HOLDA * HOLDB)
 80    continue
 
-!       call cpu_time(finish) 
       cpu = cputime() - cpu
       wall = walltime() - wall
       
