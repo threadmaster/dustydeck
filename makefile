@@ -15,7 +15,7 @@ CLIBS = -lm
 
 OBJS = cputime.o walltime.o  
 
-all: lib dusty  
+all: dusty lib
 
 cputime.o : cputime.cc   
 	$(CC) $(CFLAGS) -c cputime.cc  
@@ -27,7 +27,7 @@ dusty.o : dusty.f
 	$(F77) -c dusty.f   
 
 # Don't forget the -lstdc++
-dusty : dusty.o  $(OBJS) 
+dusty : dusty.o lib  $(OBJS) 
 	$(F77) -o dusty dusty.o  $(TIMINGLIBS) -lstdc++  
 
 # Default Targets for Cleaning up the Environment
