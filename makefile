@@ -7,8 +7,9 @@
 #
 
 F77 = gfortran    
-CC  = gcc 
+CC  = g++ 
 CFLAGS = -O3
+FFLAGS = 
 
 TIMINGLIBS =  -L./ -llbstime 
 CLIBS = -lm
@@ -24,7 +25,7 @@ walltime.o : walltime.cc
 	$(CC) $(CFLAGS) -c walltime.cc  
 
 dusty.o : dusty.f   
-	$(F77) -c dusty.f   
+	$(F77) $(FFLAGS) -c dusty.f   
 
 # Don't forget the -lstdc++
 dusty : dusty.o lib  $(OBJS) 
@@ -38,10 +39,11 @@ clean :
 pristine :
 	rm *.o
 	rm *.a
-	touch *.c *.f  
+	touch *.cc *.f  
+	rm dusty
 
 ctags :
-	ctags  *.c *.f
+	ctags  *.cc *.f
 
 # Target for making the library
 
