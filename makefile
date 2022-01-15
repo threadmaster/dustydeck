@@ -3,8 +3,8 @@
 # Andrew J. Pounds, Ph.D.
 # Departments of Chemistry and Computer Science
 # Mercer University
-# Spring 2007
-#
+# Spring 2007 (last edit Spring 2022)
+# 
 
 F77 = gfortran    
 CC  = g++ 
@@ -40,7 +40,7 @@ pristine :
 	rm *.o
 	rm *.a
 	touch *.cc *.f  
-	rm dusty
+	test -f dusty && rm dusty	
 
 ctags :
 	ctags  *.cc *.f
