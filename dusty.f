@@ -17,12 +17,12 @@
       double precision wall, cpu
       double precision walltime, cputime
 
-* The collowing was added only for call to conrand 
+* The following was added only for call to conrand 
       double precision seed, conrand
  
       double precision trig
       external trig
-* The collowing was added only for call to conrand 
+* The following was added only for call to conrand 
       external conrand 
       
 * The collowing was added only for call to walltime and cputime
