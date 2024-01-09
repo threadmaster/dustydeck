@@ -25,7 +25,7 @@
 * The following was added only for call to conrand 
       external conrand 
       
-* The collowing was added only for call to walltime and cputime
+* The following was added only for call to walltime and cputime
       external walltime, cputime
  
       N = MAXDIM
